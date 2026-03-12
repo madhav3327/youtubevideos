@@ -485,19 +485,7 @@
       line-height: 1.5;
     }
 
-    .play-badge {
-      position: absolute;
-      inset: auto auto 12px 12px;
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: rgba(8, 12, 24, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(8px);
-      font-size: 1rem;
-    }
+
 
     .video-meta {
       display: flex;
@@ -584,10 +572,7 @@
       border-radius: 22px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
+      text-align: center;
     }
 
     .reveal {
@@ -726,13 +711,11 @@
 
   <footer class="page-shell reveal">
     <div class="footer-card">
-      <div>
-        <strong style="display:block; margin-bottom:8px; color:#fff;">Madhav Videos</strong>
-        <span>A lightweight static website ready for GitHub Pages hosting.</span>
-      </div>
-      <div>
-        <span>Update your categories and links directly in <strong style="color:#fff;">index.html</strong> and push to GitHub.</span>
-      </div>
+      
+        <strong style="display:block; margin-bottom:8px; color:#fff; text-align: center;">Thank you!!</strong>
+       
+      
+      
     </div>
   </footer>
 
@@ -854,12 +837,12 @@
       },
       {
         id: "casual-vlogging",
-        title: "Not Started yet.... please wait",
+        title: "personal Vlogs",
         icon: "🎥",
         description: "Personal updates, casual thoughts, behind-the-scenes clips, and lifestyle videos.",
         videos: [
           {
-            title: "A Simple Casual Update",
+            title: "Not Started yet.... please wait",
             description: "A relaxed vlog-style video shared privately with friends.",
             url: "https://www.youtube.com/watch?v=YOUR_LINK_HERE",
             thumbnail: "",
@@ -998,7 +981,7 @@
               ? `<img src="${video.thumbnail}" alt="${video.title}" />`
               : buildFallback(video.title, video.categoryTitle)
             }
-            <div class="play-badge">▶</div>
+           
           </div>
 
           <div class="video-meta">
