@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madhav Videos</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: rgba(255, 255, 255, 0.06);
+      --card: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text: #f5f7fb;
+      --muted: #b9c2d0;
+      --accent: #7c3aed;
+      --accent-2: #06b6d4;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --max-width: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(124, 58, 237, 0.25), transparent 30%),
+        radial-gradient(circle at top right, rgba(6, 182, 212, 0.2), transparent 25%),
+        linear-gradient(160deg, #060814 0%, #0b1020 45%, #111827 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page-shell {
+      width: min(100% - 32px, var(--max-width));
+      margin: 0 auto;
+    }
+
+    .blur-orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(80px);
+      opacity: 0.45;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .orb-1 {
+      width: 280px;
+      height: 280px;
+      background: rgba(124, 58, 237, 0.35);
+      top: 60px;
+      left: -80px;
+      animation: floatOrb 10s ease-in-out infinite;
+    }
+
+    .orb-2 {
+      width: 260px;
+      height: 260px;
+      background: rgba(6, 182, 212, 0.28);
+      top: 420px;
+      right: -90px;
+      animation: floatOrb 12s ease-in-out infinite reverse;
+    }
+
+    @keyframes floatOrb {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-20px) translateX(12px); }
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(8, 12, 24, 0.55);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav {
+      width: min(100% - 32px, var(--max-width));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .brand h1 {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .brand p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 0.95rem;
+      transition: 0.25s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-2px);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      padding: 72px 0 34px;
+    }
+
+    .hero-card {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      padding: 34px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -80px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.28), transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #dbe4f0;
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+
+    .hero h2 {
+      font-size: clamp(2.1rem, 5vw, 4rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      max-width: 62ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-size: 0.98rem;
+      font-weight: 600;
+      transition: 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      box-shadow: 0 12px 30px rgba(124, 58, 237, 0.28);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .stats-grid {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .stat-card {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      min-height: 112px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .section {
+      padding: 22px 0 12px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .section-header h3 {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      max-width: 60ch;
+      line-height: 1.7;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat( auto-fit, minmax(220px, 1fr) );
+      gap: 18px;
+    }
+
+    .category-card {
+      position: relative;
+      overflow: hidden;
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+      cursor: pointer;
+      min-height: 160px;
+    }
+
+    .category-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -30px -30px auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.22), transparent 70%);
+      transition: transform 0.3s ease;
+    }
+
+    .category-card:hover,
+    .category-card.active {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .category-card:hover::before,
+    .category-card.active::before {
+      transform: scale(1.2);
+    }
+
+    .category-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .category-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .category-count {
+      font-size: 0.88rem;
+      color: var(--muted);
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .category-card h4 {
+      font-size: 1.18rem;
+      margin-bottom: 8px;
+    }
+
+    .category-card p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.96rem;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .toolbar-title h4 {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+
+    .toolbar-title p {
+      color: var(--muted);
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 260px;
+      max-width: 360px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      padding: 14px 16px;
+      padding-left: 44px;
+      border-radius: 16px;
+      outline: none;
+      font-size: 0.98rem;
+    }
+
+    .search-box span {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 18px;
+      margin-top: 12px;
+    }
+
+    .video-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.55s ease forwards;
+    }
+
+    .video-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.24);
+    }
+
+    .video-thumb {
+      aspect-ratio: 16 / 9;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.18), rgba(6, 182, 212, 0.16));
+      display: grid;
+      place-items: center;
+    }
+
+    .video-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-fallback {
+      padding: 18px;
+      text-align: center;
+      color: #dbe4f0;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.5;
+    }
+
+    .play-badge {
+      position: absolute;
+      inset: auto auto 12px 12px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(8, 12, 24, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      font-size: 1rem;
+    }
+
+    .video-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      color: #dce5f2;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .video-card h5 {
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+
+    .video-card p {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+
+    .video-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .link-btn {
+      flex: 1;
+      min-width: 130px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-weight: 600;
+      transition: 0.25s ease;
+    }
+
+    .link-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      border: none;
+    }
+
+    .link-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+    }
+
+    .link-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .empty-state {
+      padding: 26px;
+      text-align: center;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 40px 0 60px;
+      color: var(--muted);
+    }
+
+    .footer-card {
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 920px) {
+      .hero-card {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding-top: 48px;
+      }
+
+      .hero-card,
+      .category-card,
+      .video-card,
+      .footer-card {
+        padding: 18px;
+      }
+
+      .btn,
+      .link-btn {
+        width: 100%;
+      }
+
+      .search-box {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="blur-orb orb-1"></div>
+  <div class="blur-orb orb-2"></div>
+
+  <header>
+    <nav class="nav">
+      <div class="brand">
+        <div class="brand-badge">MV</div>
+        <div>
+          <h1>Madhav Videos</h1>
+          <p>Private learning hub for shared YouTube videos</p>
+        </div>
+      </div>
+
+      <div class="nav-links" id="navLinks"></div>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero reveal">
+      <div class="hero-card">
+        <div>
+          <div class="eyebrow">▶ Curated videos • Clean access • Simple sharing</div>
+          <h2>One clean place for all the videos I share with friends.</h2>
+          <p>
+            This is my personal video portal where I organize useful YouTube content by category.
+            Instead of sending links one by one, I can keep everything here in a neat, modern, and easy-to-browse layout.
+          </p>
+          <div class="hero-actions">
+            <a href="#categories" class="btn btn-primary">Browse Categories</a>
+            <a href="#videos" class="btn btn-secondary">Open Video Library</a>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Categories</div>
+            <div class="stat-value" id="categoryCount">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Videos</div>
+            <div class="stat-value" id="videoCount">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Current View</div>
+            <div class="stat-value" id="currentView">All</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="categories">
+      <div class="section-header">
+        <div>
+          <h3>Categories</h3>
+          <p>
+            Choose any topic to instantly filter the video cards. You can edit the data in the JavaScript section later to add more categories and links.
+          </p>
+        </div>
+      </div>
+      <div class="category-grid" id="categoryGrid"></div>
+    </section>
+
+    <section class="section reveal" id="videos">
+      <div class="toolbar">
+        <div class="toolbar-title">
+          <h4 id="videoSectionTitle">All Videos</h4>
+          <p id="videoSectionSubtitle">Browse all shared videos in one place.</p>
+        </div>
+        <div class="search-box">
+          <span>⌕</span>
+          <input id="searchInput" type="text" placeholder="Search videos by title or description" />
+        </div>
+      </div>
+      <div class="video-grid" id="videoGrid"></div>
+    </section>
+  </main>
+
+  <footer class="page-shell reveal">
+    <div class="footer-card">
+      <div>
+        <strong style="display:block; margin-bottom:8px; color:#fff;">Madhav Videos</strong>
+        <span>A lightweight static website ready for GitHub Pages hosting.</span>
+      </div>
+      <div>
+        <span>Update your categories and links directly in <strong style="color:#fff;">index.html</strong> and push to GitHub.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // =====================================================
+    // EDIT THIS DATA TO ADD / REMOVE CATEGORIES AND VIDEOS
+    // =====================================================
+    const videoData = [
+      {
+        id: "python",
+        title: "Python",
+        icon: "🐍",
+        description: "Python basics, automation, scripting, and practical problem-solving videos.",
+        videos: [
+          {
+            title: "Python Basics for Beginners",
+            description: "Variables, data types, conditions, loops, and simple examples.",
+            url: "https://www.youtube.com/watch?v=YOUR_LINK_HERE",
+            thumbnail: "",
+            duration: "12 min"
+          },
+          {
+            title: "Python for Automation",
+            description: "Using Python to automate daily tasks and save time.",
+            url: "https://www.youtube.com/watch?v=YOUR_LINK_HERE",
+            thumbnail: "",
+            duration: "18 min"
+          }
+        ]
+      },
+      {
+        id: "java",
+        title: "Java",
+        icon: "☕",
+        description: "Core Java, OOP, collections, interview concepts, and backend foundations.",
+        videos: [
+          {
+            title: "Java OOP Concepts Explained",
+            description: "Simple explanation of classes, objects, inheritance, and polymorphism.",
+            url: "https://www.youtube.com/watch?v=YOUR_LINK_HERE",
+            thumbnail: "",
+            duration: "15 min"
+          }
+        ]
+      },
+      {
+        id: "webdev",
+        title: "Web Development",
+        icon: "💻",
+        description: "Frontend, backend, APIs, UI design, and complete web development guides.",
+        videos: [
+          {
+            title: "How Websites Really Work",
+            description: "An overview of browser, frontend, backend, server, and database flow.",
+            url: "https://www.youtube.com/watch?v=YOUR_LINK_HERE",
+            thumbnail: "",
+            duration: "20 min"
+          },
+          {
+            title: "HTML CSS JavaScript Roadmap",
+            description: "A clear beginner path to get started in web development.",
+            url: "https://www.youtube.com/watch?v=YOUR_LINK_HERE",
+            thumbnail: "",
+            duration: "14 min"
+          }
+        ]
+      },
+      {
+        id: "sql",
+        title: "SQL",
+        icon: "🗄️",
+        description: "Queries, joins, aggregations, database thinking, and interview practice.",
+        videos: [
+          {
+            title: "SQL Joins Made Easy",
+            description: "Learn inner join, left join, right join, and full join with examples.",
+            url: "https://www.youtube.com/watch?v=YOUR_LINK_HERE",
+            thumbnail: "",
+            duration: "16 min"
+          }
+        ]
+      },
+      {
+        id: "logical-questions",
+        title: "Logical Questions",
+        icon: "🧠",
+        description: "Reasoning questions, patterns, thinking exercises, and problem-solving practice.",
+        videos: [
+          {
+            title: "Top Logical Thinking Questions",
+            description: "A set of practical problems to improve reasoning and approach.",
+            url: "https://www.youtube.com/watch?v=YOUR_LINK_HERE",
+            thumbnail: "",
+            duration: "11 min"
+          }
+        ]
+      },
+      {
+        id: "dsa",
+        title: "DSA",
+        icon: "📚",
+        description: "Data structures, algorithms, coding patterns, and interview-focused practice.",
+        videos: [
+          {
+            title: "Arrays and Strings Basics",
+            description: "A beginner-friendly start to important DSA fundamentals.",
+            url: "https://www.youtube.com/watch?v=YOUR_LINK_HERE",
+            thumbnail: "",
+            duration: "17 min"
+          }
+        ]
+      },
+      {
+        id: "casual-vlogging",
+        title: "Casual Vlogging",
+        icon: "🎥",
+        description: "Personal updates, casual thoughts, behind-the-scenes clips, and lifestyle videos.",
+        videos: [
+          {
+            title: "A Simple Casual Update",
+            description: "A relaxed vlog-style video shared privately with friends.",
+            url: "https://www.youtube.com/watch?v=YOUR_LINK_HERE",
+            thumbnail: "",
+            duration: "8 min"
+          }
+        ]
+      }
+    ];
+
+    const categoryGrid = document.getElementById('categoryGrid');
+    const videoGrid = document.getElementById('videoGrid');
+    const navLinks = document.getElementById('navLinks');
+    const searchInput = document.getElementById('searchInput');
+    const videoSectionTitle = document.getElementById('videoSectionTitle');
+    const videoSectionSubtitle = document.getElementById('videoSectionSubtitle');
+    const categoryCount = document.getElementById('categoryCount');
+    const videoCount = document.getElementById('videoCount');
+    const currentView = document.getElementById('currentView');
+
+    let activeCategory = 'all';
+    let searchTerm = '';
+
+    function getAllVideos() {
+      return videoData.flatMap(category =>
+        category.videos.map(video => ({ ...video, categoryId: category.id, categoryTitle: category.title }))
+      );
+    }
+
+    function updateStats() {
+      categoryCount.textContent = videoData.length;
+      videoCount.textContent = getAllVideos().length;
+      currentView.textContent = activeCategory === 'all'
+        ? 'All'
+        : (videoData.find(cat => cat.id === activeCategory)?.title || 'All');
+    }
+
+    function renderNav() {
+      const items = [
+        { label: 'Home', href: '#top' },
+        { label: 'Categories', href: '#categories' },
+        { label: 'Videos', href: '#videos' }
+      ];
+
+      navLinks.innerHTML = items.map(item => `
+        <a class="nav-link" href="${item.href}">${item.label}</a>
+      `).join('');
+    }
+
+    function renderCategories() {
+      const allCard = {
+        id: 'all',
+        title: 'All Videos',
+        icon: '✨',
+        description: 'View every shared video from all categories in one place.',
+        count: getAllVideos().length
+      };
+
+      const cards = [allCard, ...videoData.map(category => ({
+        id: category.id,
+        title: category.title,
+        icon: category.icon,
+        description: category.description,
+        count: category.videos.length
+      }))];
+
+      categoryGrid.innerHTML = cards.map(card => `
+        <article class="category-card ${activeCategory === card.id ? 'active' : ''}" data-category="${card.id}">
+          <div class="category-top">
+            <div class="category-icon">${card.icon}</div>
+            <div class="category-count">${card.count} video${card.count !== 1 ? 's' : ''}</div>
+          </div>
+          <h4>${card.title}</h4>
+          <p>${card.description}</p>
+        </article>
+      `).join('');
+
+      document.querySelectorAll('.category-card').forEach(card => {
+        card.addEventListener('click', () => {
+          activeCategory = card.dataset.category;
+          renderCategories();
+          renderVideos();
+          updateStats();
+          document.getElementById('videos').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    }
+
+    function buildFallback(title, category) {
+      return `
+        <div class="video-fallback">
+          <div style="font-size:2rem; margin-bottom:10px;">▶</div>
+          <div>${title}</div>
+          <div style="opacity:0.75; font-size:0.9rem; margin-top:8px;">${category}</div>
+        </div>
+      `;
+    }
+
+    function renderVideos() {
+      let filtered = getAllVideos();
+
+      if (activeCategory !== 'all') {
+        filtered = filtered.filter(video => video.categoryId === activeCategory);
+      }
+
+      if (searchTerm.trim()) {
+        const term = searchTerm.trim().toLowerCase();
+        filtered = filtered.filter(video =>
+          video.title.toLowerCase().includes(term) ||
+          video.description.toLowerCase().includes(term) ||
+          video.categoryTitle.toLowerCase().includes(term)
+        );
+      }
+
+      const selectedCategory = activeCategory === 'all'
+        ? null
+        : videoData.find(cat => cat.id === activeCategory);
+
+      videoSectionTitle.textContent = activeCategory === 'all' ? 'All Videos' : `${selectedCategory.title} Videos`;
+      videoSectionSubtitle.textContent = activeCategory === 'all'
+        ? 'Browse all shared videos in one place.'
+        : selectedCategory.description;
+
+      if (!filtered.length) {
+        videoGrid.innerHTML = `
+          <div class="empty-state">
+            No videos matched your current filter or search.
+          </div>
+        `;
+        return;
+      }
+
+      videoGrid.innerHTML = filtered.map((video, index) => `
+        <article class="video-card" style="animation-delay:${index * 0.06}s;">
+          <div class="video-thumb">
+            ${video.thumbnail
+              ? `<img src="${video.thumbnail}" alt="${video.title}" />`
+              : buildFallback(video.title, video.categoryTitle)
+            }
+            <div class="play-badge">▶</div>
+          </div>
+
+          <div class="video-meta">
+            <span class="chip">${video.categoryTitle}</span>
+            ${video.duration ? `<span class="chip">${video.duration}</span>` : ''}
+          </div>
+
+          <div>
+            <h5>${video.title}</h5>
+            <p>${video.description}</p>
+          </div>
+
+          <div class="video-actions">
+            <a class="link-btn link-primary" href="${video.url}" target="_blank" rel="noopener noreferrer">
+              Watch Video
+            </a>
+            <button class="link-btn link-secondary copy-btn" data-link="${video.url}">
+              Copy Link
+            </button>
+          </div>
+        </article>
+      `).join('');
+
+      document.querySelectorAll('.copy-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+          const link = button.dataset.link;
+          try {
+            await navigator.clipboard.writeText(link);
+            const original = button.textContent;
+            button.textContent = 'Copied';
+            setTimeout(() => button.textContent = original, 1200);
+          } catch {
+            alert('Unable to copy the link automatically.');
+          }
+        });
+      });
+    }
+
+    function setupSearch() {
+      searchInput.addEventListener('input', (event) => {
+        searchTerm = event.target.value;
+        renderVideos();
+      });
+    }
+
+    function setupRevealAnimation() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.reveal').forEach(section => observer.observe(section));
+    }
+
+    function init() {
+      renderNav();
+      renderCategories();
+      renderVideos();
+      updateStats();
+      setupSearch();
+      setupRevealAnimation();
+    }
+
+    init();
+  </script>
+</body>
+</html>
