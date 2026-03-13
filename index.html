@@ -854,16 +854,17 @@
       <div class="hero-card">
         <div>
           <div class="eyebrow">▶ Curated videos • Clean access • Simple sharing</div>
-          <h2>One clean place for all the videos I share with friends.</h2>
+          <h2>One clean place for all my videos that I share with friends.</h2>
           <p>
             This is my personal video portal where I organize useful YouTube content by category.
             Instead of sending links one by one, I can keep everything here in a neat, modern, and easy-to-browse layout.
           </p>
           <div class="hero-actions">
             <a href="#categories" class="btn btn-primary">Browse Categories</a>
+            <!-- <a href="#videos" class="btn btn-secondary">Open Video Library</a> -->
           </div>
 
-          <div class="video-toggle-row">
+         <div class="video-toggle-row">
             <div>
               <strong style="display:block; margin-bottom:4px;">Show video library</strong>
               <span style="color: var(--muted); font-size: 0.95rem;">Turn this on only when you want to browse all uploaded videos.</span>
@@ -1131,23 +1132,30 @@
     }
 
     function setupVideoVisibilityToggle() {
-      videoVisibilityToggle.checked = false;
+  videoVisibilityToggle.checked = false;
+  showVideos = false;
+  videosSection.classList.add('videos-section-hidden');
+  videoToggleLabel.textContent = 'Off';
+
+  videoVisibilityToggle.addEventListener('change', () => {
+    showVideos = videoVisibilityToggle.checked;
+    videoToggleLabel.textContent = showVideos ? 'On' : 'Off';
+
+    if (showVideos) {
+      activeCategory = 'all';
+      videosSection.classList.remove('videos-section-hidden');
+      renderCategories();
+      renderVideos();
+      updateStats();
+
+      setTimeout(() => {
+        videosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 80);
+    } else {
       videosSection.classList.add('videos-section-hidden');
-      videoToggleLabel.textContent = 'Off';
-
-      videoVisibilityToggle.addEventListener('change', () => {
-        showVideos = videoVisibilityToggle.checked;
-        videosSection.classList.toggle('videos-section-hidden', !showVideos);
-        videoToggleLabel.textContent = showVideos ? 'On' : 'Off';
-
-        if (showVideos) {
-          renderVideos();
-          setTimeout(() => {
-            videosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 80);
-        }
-      });
     }
+  });
+}
 
     function renderCategories() {
       const allCard = {
@@ -1178,16 +1186,17 @@
       `).join('');
 
       document.querySelectorAll('.category-card').forEach(card => {
-        card.addEventListener('click', () => {
-          activeCategory = card.dataset.category;
-          renderCategories();
-          renderVideos();
-          updateStats();
-          if (showVideos) {
-            document.getElementById('videos').scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        });
-      });
+  card.addEventListener('click', () => {
+    activeCategory = card.dataset.category;
+
+    videosSection.classList.remove('videos-section-hidden');
+    renderCategories();
+    renderVideos();
+    updateStats();
+
+    document.getElementById('videos').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
     }
 
     function buildFallback(title, category) {
@@ -1200,88 +1209,85 @@
       `;
     }
 
-    function renderVideos() {
-      if (!showVideos) {
-        return;
+   function renderVideos() {
+  let filtered = getAllVideos();
+
+  if (activeCategory !== 'all') {
+    filtered = filtered.filter(video => video.categoryId === activeCategory);
+  }
+
+  if (searchTerm.trim()) {
+    const term = searchTerm.trim().toLowerCase();
+    filtered = filtered.filter(video =>
+      video.title.toLowerCase().includes(term) ||
+      video.description.toLowerCase().includes(term) ||
+      video.categoryTitle.toLowerCase().includes(term)
+    );
+  }
+
+  const selectedCategory = activeCategory === 'all'
+    ? null
+    : videoData.find(cat => cat.id === activeCategory);
+
+  videoSectionTitle.textContent = activeCategory === 'all' ? 'All Videos' : `${selectedCategory.title} Videos`;
+  videoSectionSubtitle.textContent = activeCategory === 'all'
+    ? 'Browse all shared videos in one place.'
+    : selectedCategory.description;
+
+  if (!filtered.length) {
+    videoGrid.innerHTML = `
+      <div class="empty-state">
+        No videos matched your current filter or search.
+      </div>
+    `;
+    return;
+  }
+
+  videoGrid.innerHTML = filtered.map((video, index) => `
+    <article class="video-card" style="animation-delay:${index * 0.06}s;">
+      <div class="video-thumb">
+        ${video.thumbnail
+          ? `<img src="${video.thumbnail}" alt="${video.title}" />`
+          : buildFallback(video.title, video.categoryTitle)
+        }
+        <div class="play-badge">▶</div>
+      </div>
+
+      <div class="video-meta">
+        <span class="chip">${video.categoryTitle}</span>
+        ${video.duration ? `<span class="chip">${video.duration}</span>` : ''}
+      </div>
+
+      <div>
+        <h5>${video.title}</h5>
+        <p>${video.description}</p>
+      </div>
+
+      <div class="video-actions">
+        <a class="link-btn link-primary" href="${video.url}" target="_blank" rel="noopener noreferrer">
+          Watch Video
+        </a>
+        <button class="link-btn link-secondary copy-btn" data-link="${video.url}">
+          Copy Link
+        </button>
+      </div>
+    </article>
+  `).join('');
+
+  document.querySelectorAll('.copy-btn').forEach(button => {
+    button.addEventListener('click', async () => {
+      const link = button.dataset.link;
+      try {
+        await navigator.clipboard.writeText(link);
+        const original = button.textContent;
+        button.textContent = 'Copied';
+        setTimeout(() => button.textContent = original, 1200);
+      } catch {
+        alert('Unable to copy the link automatically.');
       }
-      let filtered = getAllVideos();
-
-      if (activeCategory !== 'all') {
-        filtered = filtered.filter(video => video.categoryId === activeCategory);
-      }
-
-      if (searchTerm.trim()) {
-        const term = searchTerm.trim().toLowerCase();
-        filtered = filtered.filter(video =>
-          video.title.toLowerCase().includes(term) ||
-          video.description.toLowerCase().includes(term) ||
-          video.categoryTitle.toLowerCase().includes(term)
-        );
-      }
-
-      const selectedCategory = activeCategory === 'all'
-        ? null
-        : videoData.find(cat => cat.id === activeCategory);
-
-      videoSectionTitle.textContent = activeCategory === 'all' ? 'All Videos' : `${selectedCategory.title} Videos`;
-      videoSectionSubtitle.textContent = activeCategory === 'all'
-        ? 'Browse all shared videos in one place.'
-        : selectedCategory.description;
-
-      if (!filtered.length) {
-        videoGrid.innerHTML = `
-          <div class="empty-state">
-            No videos matched your current filter or search.
-          </div>
-        `;
-        return;
-      }
-
-      videoGrid.innerHTML = filtered.map((video, index) => `
-        <article class="video-card" style="animation-delay:${index * 0.06}s;">
-          <div class="video-thumb">
-            ${video.thumbnail
-              ? `<img src="${video.thumbnail}" alt="${video.title}" />`
-              : buildFallback(video.title, video.categoryTitle)
-            }
-            <div class="play-badge">▶</div>
-          </div>
-
-          <div class="video-meta">
-            <span class="chip">${video.categoryTitle}</span>
-            ${video.duration ? `<span class="chip">${video.duration}</span>` : ''}
-          </div>
-
-          <div>
-            <h5>${video.title}</h5>
-            <p>${video.description}</p>
-          </div>
-
-          <div class="video-actions">
-            <a class="link-btn link-primary" href="${video.url}" target="_blank" rel="noopener noreferrer">
-              Watch Video
-            </a>
-            <button class="link-btn link-secondary copy-btn" data-link="${video.url}">
-              Copy Link
-            </button>
-          </div>
-        </article>
-      `).join('');
-
-      document.querySelectorAll('.copy-btn').forEach(button => {
-        button.addEventListener('click', async () => {
-          const link = button.dataset.link;
-          try {
-            await navigator.clipboard.writeText(link);
-            const original = button.textContent;
-            button.textContent = 'Copied';
-            setTimeout(() => button.textContent = original, 1200);
-          } catch {
-            alert('Unable to copy the link automatically.');
-          }
-        });
-      });
-    }
+    });
+  });
+}
 
     function setupSearch() {
       searchInput.addEventListener('input', (event) => {
